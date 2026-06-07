@@ -228,6 +228,8 @@ public class GameUI : MonoBehaviour
         showingUpgrade = false;
         Time.timeScale = 1f;
         cm.ShowOnly(cm.hudPanel);
+        // 检查是否还有待升级
+        if (player != null) player.CheckPendingLevelUp();
     }
 
     // ========== 结算 ==========

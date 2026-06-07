@@ -78,15 +78,25 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("护盾已恢复！");
     }
 
+    private int _pendingLevelUps;
+
     public void GainExperience(int amount)
     {
         currentXP += amount;
         Debug.Log($"经验 +{amount}  ({currentXP}/{xpToNextLevel})");
 
-        while (currentXP >= xpToNextLevel && level < maxLevel)
+        // 一次只升一级，等玩家选完升级再触发下一级
+        if (currentXP >= xpToNextLevel && level < maxLevel)
         {
             LevelUp();
         }
+    }
+
+    /// <summary>升级面板关闭后，检查是否还有待处理的升级</summary>
+    public void CheckPendingLevelUp()
+    {
+        if (currentXP >= xpToNextLevel && level < maxLevel)
+            LevelUp();
     }
 
     void LevelUp()

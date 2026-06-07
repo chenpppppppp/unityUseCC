@@ -18,7 +18,9 @@ public class Enemy : MonoBehaviour, IPoolable
 
     protected virtual void Start()
     {
-        // 一次性设置：碰撞检测模式
+        // 缓存 player 引用（非池化对象也需要）
+        if (player == null) player = GameObject.Find("Player")?.transform;
+
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;

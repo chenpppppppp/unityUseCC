@@ -73,6 +73,7 @@ public class Phase2Quake : BossState
     private GameObject[] weakPoints;
     private int destroyedCount;
     private float elapsed;
+    private float baseY;
     private const float QuakeDuration = 5f;
 
     public Phase2Quake(BossGolem boss) : base(boss) { }
@@ -81,6 +82,7 @@ public class Phase2Quake : BossState
     {
         destroyedCount = 0;
         elapsed = 0f;
+        baseY = Boss.transform.position.y;
         weakPoints = new GameObject[3];
 
         for (int i = 0; i < 3; i++)
@@ -102,9 +104,10 @@ public class Phase2Quake : BossState
     {
         elapsed += Time.deltaTime;
 
-        // Boss 震动
-        float shake = Mathf.Sin(elapsed * 20f) * 0.3f;
-        Boss.transform.position += Vector3.up * shake;
+        // Boss 震动（围绕 baseY 振荡）
+        Vector3 pos = Boss.transform.position;
+        pos.y = baseY + Mathf.Sin(elapsed * 20f) * 0.3f;
+        Boss.transform.position = pos;
 
         if (destroyedCount >= 3 || elapsed >= QuakeDuration)
         {
@@ -135,6 +138,9 @@ public class Phase2Quake : BossState
 
     public override void Exit()
     {
+        Vector3 pos = Boss.transform.position;
+        pos.y = baseY;
+        Boss.transform.position = pos;
         Cleanup();
     }
 }
