@@ -1,0 +1,50 @@
+-- Boss 巨石傀儡行为（可热更）
+
+BossAI = {}
+
+-- 阶段判断
+function BossAI.GetPhase(health, maxHealth)
+    if health > 300 then return 1
+    elseif health > 100 then return 2
+    else return 3
+    end
+end
+
+-- 阶段1：追踪 + 召唤
+function BossAI.Phase1Update(boss, playerPos, deltaTime, summonTimer, summonInterval)
+    local dx = playerPos.x - boss.position.x
+    local dz = playerPos.z - boss.position.z
+    local dist = math.sqrt(dx * dx + dz * dz)
+    if dist > 0.1 then
+        local dir = CS.UnityEngine.Vector3(dx/dist, 0, dz/dist)
+        boss.velocity = dir * 1
+    end
+
+    if summonTimer <= 0 then
+        return true  -- 触发召唤
+    end
+    return false
+end
+
+-- 阶段2：追踪 + 地震
+function BossAI.Phase2Update(boss, playerPos)
+    local dx = playerPos.x - boss.position.x
+    local dz = playerPos.z - boss.position.z
+    local dist = math.sqrt(dx * dx + dz * dz)
+    if dist > 0.1 then
+        boss.velocity = CS.UnityEngine.Vector3(dx/dist, 0, dz/dist) * 0.5
+    end
+end
+
+-- 阶段3：追踪 + 冲撞
+function BossAI.Phase3Update(boss, playerPos, chargeTimer, chargeInterval)
+    if chargeTimer > 0 then return false end
+
+    local dx = playerPos.x - boss.position.x
+    local dz = playerPos.z - boss.position.z
+    local dist = math.sqrt(dx * dx + dz * dz)
+    if dist > 0.1 then
+        boss.velocity = CS.UnityEngine.Vector3(dx/dist, 0, dz/dist) * 2
+    end
+    return false
+end

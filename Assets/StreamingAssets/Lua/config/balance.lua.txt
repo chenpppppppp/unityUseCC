@@ -1,0 +1,67 @@
+-- 游戏数值配置表
+-- 修改此文件任意数值 → 上传 CDN → 玩家重启即生效，无需重新打包
+
+Balance = {
+    -- 玩家
+    playerMaxHealth = 3,
+    playerMaxShield = 1,
+    shieldRecoveryTime = 30,
+
+    -- 弹珠
+    marbleDamage = 10,
+    marbleMaxBounces = 8,
+    marbleLaunchForce = 15,
+    marbleCooldown = 1.5,
+
+    -- 敌人属性
+    enemies = {
+        slime    = { health = 10, speed = 1.5, damage = 1, exp = 1, gold = 1 },
+        bat      = { health = 8,  speed = 4.0, damage = 1, exp = 1, gold = 1 },
+        skeleton = { health = 25, speed = 1.8, damage = 1, exp = 2, gold = 2 },
+        mage     = { health = 15, speed = 1.0, damage = 1, exp = 2, gold = 2 },
+        bomber   = { health = 20, speed = 3.0, damage = 1, exp = 1, gold = 1 },
+    },
+
+    -- Boss
+    boss = {
+        health = 500,
+        phase1_summonInterval = 5,
+        phase2_quakeInterval = 4,
+        phase3_chargeSpeed = 8,
+    },
+
+    -- 波次参数
+    waves = {
+        baseEnemyCount = 6,
+        enemyCountPerWave = 2,
+        baseSpawnInterval = 3.0,
+        spawnIntervalDecay = 0.25,
+    },
+
+    -- 升级效果数值
+    upgrades = {
+        bonusBounces = 2,
+        marbleSizeMult = 1.3,
+        marbleSpeedMult = 1.2,
+        cooldownMult = 0.8,
+        pickupRangeMult = 1.5,
+        explosionChance = 0.2,
+        bounceHealThreshold = 10,
+    },
+
+    -- 分数公式
+    scoreKillsWeight = 10,
+    scoreLevelWeight = 50,
+    scoreGoldWeight = 2,
+    scoreWaveWeight = 100,
+    scoreVictoryBonus = 500,
+}
+
+-- C# 通过 CallLua("Balance.GetEnemy", "slime") 读取
+function Balance.GetEnemy(enemyType)
+    return Balance.enemies[enemyType]
+end
+
+function Balance.GetBoss()
+    return Balance.boss
+end

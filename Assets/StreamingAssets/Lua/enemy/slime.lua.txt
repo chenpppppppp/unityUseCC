@@ -1,0 +1,23 @@
+-- 史莱姆 AI（可热更）
+-- 改这个文件 → 上传 CDN → 玩家重启生效
+
+SlimeAI = {}
+
+-- 计算移动速度（返回 Vector3）
+-- 参数：pos(Vector3), speed(float), playerPos(Vector3), hp(int), maxHp(int)
+function SlimeAI.GetVelocity(pos, speed, playerPos, hp, maxHp)
+    local dx = playerPos.x - pos.x
+    local dz = playerPos.z - pos.z
+    local dist = math.sqrt(dx * dx + dz * dz)
+
+    if dist < 0.1 then
+        return CS.UnityEngine.Vector3.zero
+    end
+
+    -- ★ 热更新增：半血以下加速 50%
+    if hp < maxHp * 0.5 then
+        speed = speed * 1.5
+    end
+
+    return CS.UnityEngine.Vector3(dx / dist * speed, 0, dz / dist * speed)
+end

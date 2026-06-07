@@ -1,0 +1,23 @@
+# Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/MemoryCaptures/
+
+# IDE
+.idea/
+.vs/
+*.csproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 保留文件夹结构
+!**/StreamingAssets/
+!**/Resources/

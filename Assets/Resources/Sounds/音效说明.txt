@@ -1,0 +1,36 @@
+音效文件清单
+================================================================
+
+将 .wav 或 .mp3 音效文件放入此文件夹，命名如下：
+
+  文件名             场景
+  ──────────────────────────────────────
+  marble_launch      发射弹珠
+  marble_bounce      弹珠碰撞墙壁
+  marble_hit         弹珠击中敌人
+  enemy_death        敌人死亡
+  enemy_spawn        敌人出现
+  pickup_exp         拾取经验球
+  pickup_gold        拾取金币
+  pickup_health      拾取血瓶
+  level_up           升级
+  boss_phase         Boss阶段变化
+  boss_death         Boss死亡
+  game_win           通关胜利
+  game_over          游戏失败
+  button_click       UI按钮点击
+
+免费音效来源：
+  - https://freesound.org
+  - https://mixkit.co/free-sound-effects/game/
+  - https://pixabay.com/sound-effects/
+
+背景音乐（也放入此文件夹）：
+  bgm_menu          主菜单背景音乐
+  bgm_battle        普通战斗背景音乐
+  bgm_boss          Boss 战背景音乐
+
+BGM 支持淡入淡出自动切换：菜单→战斗→Boss 无缝过渡。
+按 R 键召回弹珠也有音效。
+
+如果此文件夹为空，游戏将静音运行（不会报错）。
