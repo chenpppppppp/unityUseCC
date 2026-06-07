@@ -86,6 +86,12 @@ public class Marble : MonoBehaviour, IPoolable
             EventBus.Instance?.OnMarbleHitEnemy?.Invoke();
             enemy.TakeDamage(damage);
             CheckBounceHeal();
+
+            // 闪电弹珠：连锁附近 2 个敌人
+            PlayerAim aim = FindObjectOfType<PlayerAim>();
+            if (aim && aim.lightningMarble)
+                ChainLightning(enemy);
+
             if (SoundManager.Instance) SoundManager.Instance.Play("marble_hit");
             if (ParticleManager.Instance) ParticleManager.Instance.PlayMarbleBounce(transform.position);
         }
@@ -113,6 +119,29 @@ public class Marble : MonoBehaviour, IPoolable
         {
             PlayerHealth ph = FindObjectOfType<PlayerHealth>();
             if (ph) ph.Heal(1);
+        }
+    }
+
+    void ChainLightning(Enemy hitEnemy)
+    {
+        Collider[] cols = Physics.OverlapSphere(hitEnemy.transform.position, 4f);
+        int chained = 0;
+
+        foreach (Collider c in cols)
+        {
+            if (chained >= 2) break;
+
+            Enemy e = c.GetComponent<Enemy>();
+            if (e && e != hitEnemy && e.currentHealth > 0)
+            {
+                int chainDamage = damage / 2; // 连锁伤害 50%
+                e.TakeDamage(chainDamage);
+                chained++;
+
+                // 视觉：闪白
+                if (ParticleManager.Instance)
+                    ParticleManager.Instance.PlayPickup(e.transform.position, Color.cyan);
+            }
         }
     }
 

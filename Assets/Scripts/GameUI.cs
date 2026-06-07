@@ -162,7 +162,9 @@ public class GameUI : MonoBehaviour
             if (playerAim.bounceHealThreshold > 0) abs += "弹射回血 ";
             if (playerAim.explosionChance > 0) abs += $"爆炸{Mathf.RoundToInt(playerAim.explosionChance*100)}% ";
             if (playerAim.canRecall) abs += "召回 ";
-            if (playerAim.hasSlowMotion) abs += "时间缓滞 ";
+            if (playerAim.hasSlowMotion) abs += "缓滞 ";
+            if (playerAim.lightningMarble) abs += "闪电⚡ ";
+            if (playerAim.fireMarble) abs += "火焰🔥 ";
             cm.hudAbilitiesText.text = abs.Length > 0 ? "能力: " + abs : "";
         }
     }
@@ -204,6 +206,8 @@ public class GameUI : MonoBehaviour
             new UpgradeOption { name = "双重发射", description = "每次发射 2 颗弹珠（冷却 +50%）", onSelect = () => { if (aim) { aim.doubleShot = true; aim.cooldown *= 1.5f; } } },
             new UpgradeOption { name = "时间缓滞", description = "每 30 秒触发 3 秒子弹时间", onSelect = () => { if (aim) aim.hasSlowMotion = true; } },
             new UpgradeOption { name = "弹珠召回", description = "按 R 键回收所有弹珠", onSelect = () => { if (aim) aim.canRecall = true; } },
+            new UpgradeOption { name = "闪电弹珠", description = "弹珠击中敌人时连锁电击附近 2 个敌人，伤害 50%", onSelect = () => { if (aim) aim.lightningMarble = true; } },
+            new UpgradeOption { name = "火焰弹珠", description = "弹珠碰撞后留下燃烧地面，持续 3 秒", onSelect = () => { if (aim) aim.fireMarble = true; } },
         };
 
         List<UpgradeOption> pool = new List<UpgradeOption>(all);

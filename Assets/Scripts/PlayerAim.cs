@@ -20,6 +20,8 @@ public class PlayerAim : MonoBehaviour
     [HideInInspector] public bool doubleShot;
     [HideInInspector] public bool hasSlowMotion;
     [HideInInspector] public bool canRecall;
+    [HideInInspector] public bool lightningMarble;     // 闪电弹珠
+    [HideInInspector] public bool fireMarble;          // 火焰弹珠
 
     private LineRenderer aimLine;
     private bool isDragging;
